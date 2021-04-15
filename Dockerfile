@@ -1,9 +1,9 @@
 FROM alpine:latest
 
-ADD rootfs /
-
-RUN apk --no-cache add dropbear sudo \
+RUN apk --no-cache add dropbear sudo aws-cli curl jq bash \
  && adduser -s /bin/sh -D dbear \
  && chown -R dbear:dbear /home/dbear
 
-CMD ["/usr/sbin/dropbear", "-RFEwg", "-p", "22"]
+ADD rootfs /
+
+CMD ["/entrypoint.sh"]

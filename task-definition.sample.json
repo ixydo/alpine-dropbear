@@ -1,0 +1,28 @@
+{
+    "family": "alpine-dropbear",
+    "executionRoleArn": "arn:aws:iam::$ACCOUNT_ID:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "alpine-dropbear",
+            "image": "ixydo/alpine-dropbear",
+            "portMappings": [{
+                "containerPort": 22,
+                "hostPort": 22,
+                "protocol": "tcp"
+            }],
+            "essential": true,
+            "logConfiguration": {
+              "logDriver": "awslogs",
+              "options": {
+                "awslogs-group": "/$LOG_GROUP/debug",
+                "awslogs-region": "$AWS_REGION",
+                "awslogs-stream-prefix": "alpine-dropbear"
+              }
+            }
+        }
+    ],
+    "requiresCompatibilities": [ "FARGATE" ],
+    "cpu": "256",
+    "memory": "512"
+}
